@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.Window;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -25,6 +28,7 @@ public class guideActivity extends AppCompatActivity {
     private LinearLayout llPointGroup;//小圆点父级控件
     private  int mPointWidth;
     private View viewRedView;
+    private Button startBtn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,6 +37,20 @@ public class guideActivity extends AppCompatActivity {
         setContentView(R.layout.activity_guide);
         vpGuide=(ViewPager) findViewById(R.id.vp_guide);
         viewRedView=findViewById(R.id.view_red_point);
+        startBtn=(Button) findViewById(R.id.button_start);
+        startBtn.setVisibility(View.INVISIBLE);
+        startBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //更新sp，表示展示了新手引导
+                SharedPreferences sp=getSharedPreferences("config",MODE_PRIVATE);
+                sp.edit().putBoolean("is_user_guid_showed",true).commit();
+
+                //跳转主页面
+                startActivity(new Intent(guideActivity.this,Main2Activity.class));
+                finish();
+            }
+        });
         llPointGroup=(LinearLayout) findViewById(R.id.ll_point);
         initView();
         vpGuide.setAdapter(new GuideAdapter());
@@ -108,7 +126,12 @@ public class guideActivity extends AppCompatActivity {
 
         @Override
         public void onPageSelected(int position) {
-
+         if(position==mImgIds.length-2){
+             startBtn.setVisibility(View.VISIBLE);
+         }
+         else{
+             startBtn.setVisibility(View.INVISIBLE);
+         }
         }
 
         @Override

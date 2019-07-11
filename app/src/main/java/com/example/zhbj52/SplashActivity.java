@@ -1,6 +1,7 @@
 package com.example.zhbj52;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -56,8 +57,9 @@ public class SplashActivity extends AppCompatActivity {
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                startActivity(new Intent(SplashActivity.this,guideActivity.class));
-                finish();
+               //跳转
+                jumpNextPage();
+
             }
 
             @Override
@@ -68,5 +70,18 @@ public class SplashActivity extends AppCompatActivity {
         rlRoot.startAnimation(set);
 
     }
+    private void jumpNextPage(){
+        //is_user_guid_showed 在引导页设置
+        SharedPreferences sp=getSharedPreferences("config",MODE_PRIVATE);
+        boolean userGuide=(Boolean)sp.getBoolean("is_user_guid_showed",false);
+        if(!userGuide) {
+            startActivity(new Intent(SplashActivity.this, guideActivity.class));
+        }
+        else{
+            startActivity(new Intent(SplashActivity.this,Main2Activity.class));
+        }
+        finish();
+    }
+
 
 }

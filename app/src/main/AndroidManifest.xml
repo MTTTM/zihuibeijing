@@ -9,7 +9,10 @@
         android:roundIcon="@drawable/icon_150"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".guideActivity" android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".Main2Activity"></activity>
+        <activity
+            android:name=".guideActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".SplashActivity"
             android:label="@string/title_activity_splash"
